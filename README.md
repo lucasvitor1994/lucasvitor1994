@@ -1,7 +1,8 @@
 
 olá eu sou o lucas victor, trabalho a 8 anos na area de tecnologia da informação com foco nas tecnologias relacionadas a VOIP Avaya, tenho vasta esperiencia nessa área atuamento estou aprimorando minhas outras habilidades realacionadas a desenvolvimento tais como NodeJS java script Html e CSS.
 atuamente estou trabalhando em um projeto de VOIP baseado em asterisk, desenvolvendo tarifador e Discador.
-Here are some ideas to get you started:
+
+
 
 - 🔭 I’m currently working on Vikstar Services
 - 🌱 I’m currently learning Type Script/Java Script/

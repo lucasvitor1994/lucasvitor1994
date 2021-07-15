@@ -1,0 +1,51 @@
+Esse projeto tem como objetico automatizar o processo de criação de agentes no dicionario do CMS Avaya, utilizando o arquivo de Vbscript do CMS e Power Shell.
+é necessario criar uma tabela em excell contendo as informações 
+Coluna 1: Agent ID
+Coluna 2: Nome do Agent
+Coluna 3: Comentarios
+
+# -----------------------------------------------------
+function Release-Ref ($ref) {
+([System.Runtime.InteropServices.Marshal]::ReleaseComObject(
+[System.__ComObject]$ref) -gt 0)
+[System.GC]::Collect()
+[System.GC]::WaitForPendingFinalizers()
+}
+# ------- ABRINDO AQUIVO XLSX
+$objExcel = new-object -comobject excel.application 
+$objExcel.Visible = $True 
+$objWorkbook = $objExcel.Workbooks.Open("D:\Dicionario.xlsx")
+$objWorksheet = $objWorkbook.Worksheets.Item(1)
+
+$LINES = 25
+
+#---->  LOOP INICIA AQUI
+
+for ($intRow = 1; $intRow -le $LINES; $intRow++){
+
+#----> intRow +1 até o fim do loop
+
+$NAME = $objWorksheet.Cells.Item($intRow,1).Value()
+$ID = $objWorksheet.Cells.Item($intRow,2).Value()
+
+#----> INICIAR O CHAGE NO ARQUIVO DO CMS
+(Get-Content 'D:\Login Identifications.acsauto').Replace('NOMEAQUI', "$NAME") | Set-Content 'D:\Login Identifications.acsauto'
+(Get-Content 'D:\Login Identifications.acsauto').Replace('IDAQUI', "$ID") | Set-Content 'D:\Login Identifications.acsauto'
+
+#----> EXECUTE VBSCRIPT
+& "D:\Login Identifications.acsauto"
+
+#----> AGUARDAR 5 SEG PARA O PROXIMO PASSO
+Start-Sleep -s 5
+
+#----> LIMPAR VARIAVEL E ALTERAÇÕES NO ARQUIVO
+
+(Get-Content 'D:\Login Identifications.acsauto').Replace("$NAME", 'NOMEAQUI') | Set-Content 'D:\Login Identifications.acsauto'
+(Get-Content 'D:\Login Identifications.acsauto').Replace("$ID", 'IDAQUI') | Set-Content 'D:\Login Identifications.acsauto'
+
+
+#----> FIM DO LOOP
+}
+#----> MATANDO EXCELL e  DICIONARIO
+
+$objExcel.Quit()

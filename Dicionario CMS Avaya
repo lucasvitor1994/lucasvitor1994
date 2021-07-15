@@ -3,7 +3,9 @@ Esse projeto tem como objetico automatizar o processo de criação de agentes no
 Coluna 1: Agent ID
 Coluna 2: Nome do Agent
 Coluna 3: Comentarios
-
+PS: é nessessario subirtiuir a no arquivo os diretorios abaixo de acordo com sua estrutura de pastas
+D:\Dicionario.xlsx : diretorio onde está o arquivo excell
+D:\Login Identifications.acsauto : diretorio onde está o Vbscript
 # -----------------------------------------------------
 function Release-Ref ($ref) {
 ([System.Runtime.InteropServices.Marshal]::ReleaseComObject(

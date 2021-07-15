@@ -51,3 +51,55 @@ Start-Sleep -s 5
 #----> MATANDO EXCELL e  DICIONARIO
 
 $objExcel.Quit()
+
+
+
+Criar arquivo nomeado como: Avaya Supervisor Automatic Script (.acsauto)
+
+'LANGUAGE=ENU
+'SERVERNAME=10.3.71.12
+Public Sub Main()
+
+'## cvs_cmd_begin
+'## ID = 1050
+'## Description = "Dictionary: Form: Login Identifications: Add"
+'## Parameters.Add "Add","_Action"
+'## Parameters.Add "Login Identifications","_FormName"
+'## Parameters.Add "Dictionary: Form: Login Identifications: Add","_Description"
+'## Parameters.Add "Dictionary","_Subsystem"
+'## Parameters.Add "Dictionary","_CatalogName"
+'## Parameters.Add "1","_ACD"
+'## Parameters.Add "False","_Interactive"
+'## Parameters.Add "ENU","_Language"
+'## Parameters.Add "4694","_Top"
+'## Parameters.Add "8400","_Left"
+'## Parameters.Add "6240","_Width"
+'## Parameters.Add "3572","_Height"
+'## Parameters.Add "3","_NumProperties"
+'## Parameters.Add "NOMEAQUI","ag_name"
+'## Parameters.Add "IDAQUI","login_id"
+'## Parameters.Add "","descr"
+
+ On Error Resume Next
+
+ cvsSrv.Dictionary.ACD = 1
+ b = cvsSrv.Dictionary.CreateOperation("Login Identifications",Op)   
+ If b Then
+Op.Window.Top = 4694
+Op.Window.Left = 8400
+Op.Window.Width = 6240
+Op.Window.Height = 3572        
+Op.SetProperty "ag_name","NOMEAQUI"        
+	Op.SetProperty "login_id","IDAQUI"        
+	Op.SetProperty "descr",""        
+
+
+b = Op.DoAction("Add")
+     
+End If
+
+ If Not cvsSrv.Interactive Then cvsSrv.ActiveTasks.Remove Op.TaskID
+ Set Op = Nothing
+'## cvs_cmd_end
+
+End Sub
